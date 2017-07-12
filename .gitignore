@@ -1,5 +1,7 @@
 # Ignore all IDE related paths
 .idea
 
+project/
+target/
 *.class
 *.log
