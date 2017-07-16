@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package com.zobot.client.packet;
+
+//import "google/protobuf/descriptor.proto";
+//import "scalapb/scalapb.proto";
+
+message Handshake {
+    string host = 1;
+    int32 port = 2;
+}
