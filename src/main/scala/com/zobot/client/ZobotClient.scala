@@ -7,6 +7,7 @@ import akka.io.Tcp._
 import akka.io.{IO, Tcp}
 import akka.pattern.ask
 import akka.util.{ByteString, Timeout}
+import com.google.protobuf.wrappers.UInt32Value
 import com.zobot.client.packet.models.Handshake
 import com.zobot.client.packet.PacketSerializer
 
@@ -32,15 +33,58 @@ class ZobotClient(host: String, port: Int) {
   def login(username: String, password: String): Future[Any] = {
     println(username, password)
 
-    val handshake = Handshake(host, port)
+    val handshake = Handshake( 2)
     val serializer = new PacketSerializer()
     val output = serializer.toBinary(handshake)
 
-    println("PRE:", output)
+    println("SCALA:", insertPeriodically(bytesToHex(output), " ", 2))
+    println("SCALA:", insertPeriodically(bytesToHex(Array[Byte](2)), " ", 2))
+    println("JSCRT:", "00 bc 02    0e 31 39 32 2e 31 36 38 2e 39 39 2e 31 30 30    80 00 02")
 
-    client ! output
-    client ! 0x01
-    client ? 0x00
+    client ? ByteString(output)
+  }
+
+  private val hexArray = "0123456789ABCDEF".toCharArray
+
+  def  intToByteArray(int value):byte[] {
+    byte[] b = new byte[4];
+    for (int i = 0; i >> offset) & 0xFF);
+  }
+  return b;
+}
+
+  def bytesToHex(bytes: Array[Byte]): String = {
+    val hexChars = new Array[Char](bytes.length * 2)
+    var j = 0
+    while ( {
+      j < bytes.length
+    }) {
+      val v = bytes(j) & 0xFF
+      hexChars(j * 2) = hexArray(v >>> 4)
+      hexChars(j * 2 + 1) = hexArray(v & 0x0F)
+
+      {
+        j += 1;
+        j - 1
+      }
+    }
+    new String(hexChars)
+  }
+
+  def insertPeriodically(text: String, insert: String, period: Int): String = {
+    val builder = new StringBuilder(text.length + insert.length * (text.length / period) + 1)
+    var index = 0
+    var prefix = ""
+    while ( {
+      index < text.length
+    }) { // Don't put the insert in the very first iteration.
+      // This is easier than appending it *after* each substring
+      builder.append(prefix)
+      prefix = insert
+      builder.append(text.substring(index, Math.min(index + period, text.length)))
+      index += period
+    }
+    builder.toString
   }
 
   class PacketClient(remote: InetSocketAddress, handler: ActorRef) extends Actor with Stash {

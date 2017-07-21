@@ -6,6 +6,8 @@ package com.zobot.client.packet;
 //import "scalapb/scalapb.proto";
 
 message Handshake {
-    string host = 1;
-    int32 port = 2;
+//    uint32 protocolVersion = 1;
+//    string host = 2;
+//    int32 port = 3;
+    uint32 nextState = 4;
 }

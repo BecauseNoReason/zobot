@@ -8,7 +8,7 @@ import scala.util.{Failure, Success}
 
 object Zobot extends App {
 
-  val client = new ZobotClient("192.168.99.100", 32770)
+  val client = new ZobotClient("192.168.99.100", 32768)
 
   client login("user", "pass") andThen {
     case Success(a: ByteString) => println("completed once!", a decodeString ByteString.UTF_8)
