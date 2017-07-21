@@ -7,12 +7,12 @@ import akka.io.Tcp._
 import akka.io.{IO, Tcp}
 import akka.pattern.ask
 import akka.util.{ByteString, Timeout}
-import com.google.protobuf.wrappers.UInt32Value
 import com.zobot.client.packet.models.Handshake
 import com.zobot.client.packet.PacketSerializer
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * A class with basic interaction methods to be used against the targeted Minecraft server.
@@ -33,25 +33,46 @@ class ZobotClient(host: String, port: Int) {
   def login(username: String, password: String): Future[Any] = {
     println(username, password)
 
-    val handshake = Handshake( 2)
+    val handshake = Handshake(2)
     val serializer = new PacketSerializer()
     val output = serializer.toBinary(handshake)
 
     println("SCALA:", insertPeriodically(bytesToHex(output), " ", 2))
-    println("SCALA:", insertPeriodically(bytesToHex(Array[Byte](2)), " ", 2))
-    println("JSCRT:", "00 bc 02    0e 31 39 32 2e 31 36 38 2e 39 39 2e 31 30 30    80 00 02")
+    println("SCALA:", insertPeriodically(bytesToHex(BigInt(0x00).toByteArray ++ Varint(316) ++ String255(host) ++ UnsignedShort(port) ++ Varint(2)), " ", 2))
+    println("JSCRT:", "00 bc 02 0e 31 39 32 2e 31 36 38 2e 39 39 2e 31 30 30 80 00 02")
 
     client ? ByteString(output)
   }
 
   private val hexArray = "0123456789ABCDEF".toCharArray
 
-  def  intToByteArray(int value):byte[] {
-    byte[] b = new byte[4];
-    for (int i = 0; i >> offset) & 0xFF);
+  def String255(x: String): Array[Byte] = BigInt(x.length).toByteArray ++ x.getBytes
+
+  var INT: Double = Math.pow(2, 31)
+  var MSB: Int = 0x80
+  var REST: Int = 0x7F
+  var MSBALL: Int = ~REST
+
+  def Varint(x: Int): Array[Byte] = {
+    var number = x + 1
+    var output = ArrayBuffer[Int]()
+
+    while (number >= INT) {
+      output += (number + 0xFF) | MSB
+      number /= 128
+    }
+
+    while (number + MSBALL > 0) {
+      output += (number + 0xFF) | MSB
+      number >>>= 7
+    }
+
+    output += number | 0
+
+    output.map(_.toByte).toArray
   }
-  return b;
-}
+
+  def UnsignedShort(x: Int): Array[Byte] = BigInt(x.toShort).toByteArray
 
   def bytesToHex(bytes: Array[Byte]): String = {
     val hexChars = new Array[Char](bytes.length * 2)
@@ -64,7 +85,7 @@ class ZobotClient(host: String, port: Int) {
       hexChars(j * 2 + 1) = hexArray(v & 0x0F)
 
       {
-        j += 1;
+        j += 1
         j - 1
       }
     }
