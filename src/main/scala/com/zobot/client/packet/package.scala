@@ -7,6 +7,9 @@ import scala.collection.mutable.ArrayBuffer
 
 package object packet {
 
+  /**
+    *
+    */
   trait Packet {
 
     private val INT: Double = Math.pow(2, 31)
@@ -14,15 +17,36 @@ package object packet {
     private val REST: Int = 0x7F
     private val MSBALL: Int = ~REST
 
+    /**
+      *
+      */
     val packetId: Int
+
+    /**
+      *
+      */
     val packetData: Array[Byte]
 
+    /**
+      *
+      * @return
+      */
     def buildPacket: Array[Byte] =
       toVarInt(packetData.length + 1) ++ toVarInt(packetId) ++ packetData
 
+    /**
+      *
+      * @param x
+      * @return
+      */
     def toUnsignedShort(x: Int): Array[Byte] =
       BigInt(x.toShort).toByteArray
 
+    /**
+      *
+      * @param x
+      * @return Array[Byte]
+      */
     def toVarInt(x: Int): Array[Byte] = {
       var number = x
       var output = ArrayBuffer[Int]()
@@ -42,16 +66,23 @@ package object packet {
       output.map(_.toByte).toArray
     }
 
+    /**
+      *
+      * @param x
+      * @return
+      */
     def toVarString(x: String): Array[Byte] =
       toVarInt(x.length) ++ x.getBytes
 
   }
 
+  /**
+    *
+    */
   class PacketSerializer extends Serializer {
 
-    override def includeManifest: Boolean = true
-
     override def identifier = 41
+    override def includeManifest = true
 
     override def toBinary(obj: AnyRef): Array[Byte] = {
       obj match {

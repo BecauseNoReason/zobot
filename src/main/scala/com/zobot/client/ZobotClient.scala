@@ -32,19 +32,10 @@ class ZobotClient(host: String, port: Int) {
   val client: ActorRef = system actorOf PacketClient.props(socketAddress, handler)
 
   def login(username: String, password: String): Future[Any] = {
-    val handshake = Handshake(316, host, port, 2)
-    val loginStart = LoginStart(username)
     val serializer = new PacketSerializer()
 
-    println("SCALA:", insertPeriodically(bytesToHex(serializer.toBinary(loginStart)), " ", 2).toString)
-    println("JSCRT:", "00 03 66 6f 6f")
-    println("SCALA:", insertPeriodically(bytesToHex(serializer.toBinary(handshake)), " ", 2))
-    println("JSCRT:", "00 bc 02 0e 31 39 32 2e 31 36 38 2e 39 39 2e 31 30 30 80 00 02")
-    println(bytesToHex(serializer.toBinary(Request())))
-
-
-    client ! ByteString(serializer.toBinary(handshake))
-    client ? ByteString(serializer.toBinary(loginStart))
+    client ! ByteString(serializer.toBinary(Handshake(316, host, port, 2)))
+    client ? ByteString(serializer.toBinary(LoginStart(username)))
 //    client ? NeedsResponse(ByteString(serializer.toBinary(Request())))
   }
 
