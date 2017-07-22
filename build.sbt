@@ -1,5 +1,3 @@
-import com.trueaccord.scalapb.compiler.Version.scalapbVersion
-
 name := "zobot"
 version := "1.0"
 scalaVersion := "2.11.8"
@@ -11,7 +9,6 @@ libraryDependencies ++= {
 
   Seq(
     "com.typesafe.akka"      %% "akka-actor"                    % akkaVersion,
-    "com.trueaccord.scalapb" %% "scalapb-runtime"               % scalapbVersion % "protobuf",
     "org.apache.spark"       %% "spark-core"                    % sparkVersion,
     "org.apache.spark"       %% "spark-mllib"                   % sparkVersion,
     "org.apache.spark"       %% "spark-sql"                     % sparkVersion,
@@ -20,10 +17,5 @@ libraryDependencies ++= {
     "org.specs2"             %% "specs2-mock"                   % specsVersion   % "test",
     "org.specs2"             %% "specs2-matcher-extra"          % specsVersion   % "test",
     "com.datastax.spark"     % "spark-cassandra-connector_2.10" % "2.0.3"
-
   )
 }
-
-PB.targets in Compile := Seq(
-  scalapb.gen() -> (sourceManaged in Compile).value
-)
