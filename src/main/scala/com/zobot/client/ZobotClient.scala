@@ -7,12 +7,11 @@ import akka.io.Tcp._
 import akka.io.{IO, Tcp}
 import akka.pattern.ask
 import akka.util.{ByteString, Timeout}
-import com.zobot.client.packet.models.Handshake
-import com.zobot.client.packet.PacketSerializer
+import com.zobot.client.packet._
+import com.zobot.client.packet.deffinitions.{Handshake, LoginStart, Request}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.collection.mutable.ArrayBuffer
 
 /**
   * A class with basic interaction methods to be used against the targeted Minecraft server.
@@ -21,6 +20,8 @@ import scala.collection.mutable.ArrayBuffer
   * @param port The port number of the server
   */
 class ZobotClient(host: String, port: Int) {
+
+  case class NeedsResponse(value: ByteString)
 
   lazy val socketAddress = new InetSocketAddress(host, port)
 
@@ -31,48 +32,23 @@ class ZobotClient(host: String, port: Int) {
   val client: ActorRef = system actorOf PacketClient.props(socketAddress, handler)
 
   def login(username: String, password: String): Future[Any] = {
-    println(username, password)
-
-    val handshake = Handshake(2)
+    val handshake = Handshake(316, host, port, 2)
+    val loginStart = LoginStart(username)
     val serializer = new PacketSerializer()
-    val output = serializer.toBinary(handshake)
 
-    println("SCALA:", insertPeriodically(bytesToHex(output), " ", 2))
-    println("SCALA:", insertPeriodically(bytesToHex(BigInt(0x00).toByteArray ++ Varint(316) ++ String255(host) ++ UnsignedShort(port) ++ Varint(2)), " ", 2))
+    println("SCALA:", insertPeriodically(bytesToHex(serializer.toBinary(loginStart)), " ", 2).toString)
+    println("JSCRT:", "00 03 66 6f 6f")
+    println("SCALA:", insertPeriodically(bytesToHex(serializer.toBinary(handshake)), " ", 2))
     println("JSCRT:", "00 bc 02 0e 31 39 32 2e 31 36 38 2e 39 39 2e 31 30 30 80 00 02")
+    println(bytesToHex(serializer.toBinary(Request())))
 
-    client ? ByteString(output)
+
+    client ! ByteString(serializer.toBinary(handshake))
+    client ? ByteString(serializer.toBinary(loginStart))
+//    client ? NeedsResponse(ByteString(serializer.toBinary(Request())))
   }
 
   private val hexArray = "0123456789ABCDEF".toCharArray
-
-  def String255(x: String): Array[Byte] = BigInt(x.length).toByteArray ++ x.getBytes
-
-  var INT: Double = Math.pow(2, 31)
-  var MSB: Int = 0x80
-  var REST: Int = 0x7F
-  var MSBALL: Int = ~REST
-
-  def Varint(x: Int): Array[Byte] = {
-    var number = x + 1
-    var output = ArrayBuffer[Int]()
-
-    while (number >= INT) {
-      output += (number + 0xFF) | MSB
-      number /= 128
-    }
-
-    while (number + MSBALL > 0) {
-      output += (number + 0xFF) | MSB
-      number >>>= 7
-    }
-
-    output += number | 0
-
-    output.map(_.toByte).toArray
-  }
-
-  def UnsignedShort(x: Int): Array[Byte] = BigInt(x.toShort).toByteArray
 
   def bytesToHex(bytes: Array[Byte]): String = {
     val hexChars = new Array[Char](bytes.length * 2)
@@ -132,8 +108,14 @@ class ZobotClient(host: String, port: Int) {
     }
 
     def readyForMessages(connection: ActorRef): Receive = {
-      case data: ByteString =>
+      case data: NeedsResponse => {
+        println("writing need res", data.value)
         context become waitingForResponse(connection, sender)
+        connection ! Write(data.value)
+      }
+
+      case data: ByteString =>
+        println("writing", data)
         connection ! Write(data)
 
       case data: StringBuffer =>
