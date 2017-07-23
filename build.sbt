@@ -10,15 +10,17 @@ libraryDependencies ++= {
   val specsVersion = "3.9.1"
 
   Seq(
-    "com.typesafe.akka"      %% "akka-actor"           % akkaVersion,
-    "com.trueaccord.scalapb" %% "scalapb-runtime"      % scalapbVersion % "protobuf",
-    "org.apache.spark"       %% "spark-core"           % sparkVersion,
-    "org.apache.spark"       %% "spark-mllib"          % sparkVersion,
-    "org.apache.spark"       %% "spark-sql"            % sparkVersion,
-    "org.scalacheck"         %% "scalacheck"           % "1.13.5"       % "test",
-    "org.specs2"             %% "specs2-core"          % specsVersion   % "test",
-    "org.specs2"             %% "specs2-mock"          % specsVersion   % "test",
-    "org.specs2"             %% "specs2-matcher-extra" % specsVersion   % "test"
+    "com.typesafe.akka"      %% "akka-actor"                    % akkaVersion,
+    "com.trueaccord.scalapb" %% "scalapb-runtime"               % scalapbVersion % "protobuf",
+    "org.apache.spark"       %% "spark-core"                    % sparkVersion,
+    "org.apache.spark"       %% "spark-mllib"                   % sparkVersion,
+    "org.apache.spark"       %% "spark-sql"                     % sparkVersion,
+    "org.scalacheck"         %% "scalacheck"                    % "1.13.5"       % "test",
+    "org.specs2"             %% "specs2-core"                   % specsVersion   % "test",
+    "org.specs2"             %% "specs2-mock"                   % specsVersion   % "test",
+    "org.specs2"             %% "specs2-matcher-extra"          % specsVersion   % "test",
+    "com.datastax.spark"     % "spark-cassandra-connector_2.10" % "2.0.3"
+
   )
 }
 
