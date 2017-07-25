@@ -1,5 +1,6 @@
 package com.zobot.ai.spark
 
+import com.zobot.ai.spark.helpers.SparkLogisticRegression
 import org.apache.spark.ml.classification.LogisticRegression
 import org.apache.spark.ml.linalg.Vectors
 import org.specs2.Specification
