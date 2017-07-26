@@ -12,9 +12,9 @@ object LogisticRegressionHelpers {
     prediction: Double
   )
 
-  def train(estimator: LogisticRegression, trainingSet: DataFrame): LogisticRegressionModel = estimator.fit(trainingSet)
+  def trainModel(estimator: LogisticRegression, trainingSet: DataFrame): LogisticRegressionModel = estimator.fit(trainingSet)
 
-  def test(transformer: LogisticRegressionModel, testSet: DataFrame): LogisticRegressionModel = {
+  def testModel(transformer: LogisticRegressionModel, testSet: DataFrame): LogisticRegressionModel = {
     transformer.transform(testSet).select("features", "label", "myProbability", "prediction").collect().foreach {
       case Row(features: Vector, label: Double, prob: Vector, prediction: Double) =>
         ModelTestResults(features, label, prob, prediction)
