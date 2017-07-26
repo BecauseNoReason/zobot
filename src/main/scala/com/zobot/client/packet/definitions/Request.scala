@@ -1,4 +1,4 @@
-package com.zobot.client.packet.deffinitions
+package com.zobot.client.packet.definitions
 
 import com.zobot.client.packet.Packet
 

@@ -1,4 +1,4 @@
-package com.zobot.client.packet.deffinitions
+package com.zobot.client.packet.definitions
 
 import com.zobot.client.packet.Packet
 
@@ -14,9 +14,9 @@ case class Handshake(protocolVersion: Int, serverAddress: String, serverPort: In
   override lazy val packetId = 0x00
 
   override lazy val packetData: Array[Byte] =
-    toVarInt(protocolVersion) ++
-    toVarString(serverAddress) ++
-    toUnsignedShort(serverPort) ++
-    toVarInt(nextState)
+    fromVarInt(protocolVersion) ++
+    fromVarString(serverAddress) ++
+    fromUnsignedShort(serverPort) ++
+    fromVarInt(nextState)
 
 }

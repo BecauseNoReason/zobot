@@ -8,7 +8,7 @@ import akka.io.{IO, Tcp}
 import akka.pattern.ask
 import akka.util.{ByteString, Timeout}
 import com.zobot.client.packet._
-import com.zobot.client.packet.deffinitions.{Handshake, LoginStart, Request}
+import com.zobot.client.packet.definitions.{Handshake, LoginStart, Request}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._

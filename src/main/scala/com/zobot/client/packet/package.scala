@@ -1,7 +1,7 @@
 package com.zobot.client
 
 import akka.serialization.Serializer
-import com.zobot.client.packet.deffinitions.{Handshake, LoginStart, Ping, Request}
+import com.zobot.client.packet.definitions.{Handshake, LoginStart, Ping, Request}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -32,14 +32,14 @@ package object packet {
       * @return
       */
     def buildPacket: Array[Byte] =
-      toVarInt(packetData.length + 1) ++ toVarInt(packetId) ++ packetData
+      fromVarInt(packetData.length + 1) ++ fromVarInt(packetId) ++ packetData
 
     /**
       *
       * @param x
       * @return
       */
-    def toUnsignedShort(x: Int): Array[Byte] =
+    def fromUnsignedShort(x: Int): Array[Byte] =
       BigInt(x.toShort).toByteArray
 
     /**
@@ -47,7 +47,7 @@ package object packet {
       * @param x
       * @return Array[Byte]
       */
-    def toVarInt(x: Int): Array[Byte] = {
+    def fromVarInt(x: Int): Array[Byte] = {
       var number = x
       var output = ArrayBuffer[Int]()
 
@@ -71,8 +71,8 @@ package object packet {
       * @param x
       * @return
       */
-    def toVarString(x: String): Array[Byte] =
-      toVarInt(x.length) ++ x.getBytes
+    def fromVarString(x: String): Array[Byte] =
+      fromVarInt(x.length) ++ x.getBytes
 
   }
 
