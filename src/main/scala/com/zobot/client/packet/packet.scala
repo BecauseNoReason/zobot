@@ -1,7 +1,9 @@
 package com.zobot.client
 
 import akka.serialization.Serializer
-import com.zobot.client.packet.definitions.{Handshake, LoginStart, Ping, Request}
+import com.zobot.client.packet.definitions.serverbound.handshaking.Handshake
+import com.zobot.client.packet.definitions.serverbound.login.LoginStart
+import com.zobot.client.packet.definitions.serverbound.status.{Ping, Request}
 
 import scala.collection.mutable.ArrayBuffer
 
