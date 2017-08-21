@@ -2,25 +2,25 @@ package com.zobot.client.packet.definitions.clientbound.play
 
 import com.zobot.client.packet.Packet
 
-case class WorldBorder(action: UnknownType, setSizeDiameter: UnknownType, lerpSizeOldDiameter: UnknownType, lerpSizeNewDiameter: UnknownType, lerpSizeSpeed: UnknownType, setCenterX: UnknownType, setCenterZ: UnknownType, initializeX: UnknownType, initializeZ: UnknownType, initializeOldDiameter: UnknownType, initializeNewDiameter: UnknownType, initializeSpeed: UnknownType, initializePortalTeleportBoundary: UnknownType, initializeWarningTime: UnknownType, initializeWarningBlocks: UnknownType, setWarningTime: UnknownType, setWarningBlocks: UnknownType) extends Packet {
+case class WorldBorder(action: Any, setSizeDiameter: Any, lerpSizeOldDiameter: Any, lerpSizeNewDiameter: Any, lerpSizeSpeed: Any, setCenterX: Any, setCenterZ: Any, initializeX: Any, initializeZ: Any, initializeOldDiameter: Any, initializeNewDiameter: Any, initializeSpeed: Any, initializePortalTeleportBoundary: Any, initializeWarningTime: Any, initializeWarningBlocks: Any, setWarningTime: Any, setWarningBlocks: Any) extends Packet {
   override lazy val packetId = 0x37
 
   override lazy val packetData: Array[Byte] =
-    fromUnknownType(action) ++
-    fromUnknownType(setSizeDiameter) ++
-    fromUnknownType(lerpSizeOldDiameter) ++
-    fromUnknownType(lerpSizeNewDiameter) ++
-    fromUnknownType(lerpSizeSpeed) ++
-    fromUnknownType(setCenterX) ++
-    fromUnknownType(setCenterZ) ++
-    fromUnknownType(initializeX) ++
-    fromUnknownType(initializeZ) ++
-    fromUnknownType(initializeOldDiameter) ++
-    fromUnknownType(initializeNewDiameter) ++
-    fromUnknownType(initializeSpeed) ++
-    fromUnknownType(initializePortalTeleportBoundary) ++
-    fromUnknownType(initializeWarningTime) ++
-    fromUnknownType(initializeWarningBlocks) ++
-    fromUnknownType(setWarningTime) ++
-    fromUnknownType(setWarningBlocks)
+    fromAny(action) ++
+    fromAny(setSizeDiameter) ++
+    fromAny(lerpSizeOldDiameter) ++
+    fromAny(lerpSizeNewDiameter) ++
+    fromAny(lerpSizeSpeed) ++
+    fromAny(setCenterX) ++
+    fromAny(setCenterZ) ++
+    fromAny(initializeX) ++
+    fromAny(initializeZ) ++
+    fromAny(initializeOldDiameter) ++
+    fromAny(initializeNewDiameter) ++
+    fromAny(initializeSpeed) ++
+    fromAny(initializePortalTeleportBoundary) ++
+    fromAny(initializeWarningTime) ++
+    fromAny(initializeWarningBlocks) ++
+    fromAny(setWarningTime) ++
+    fromAny(setWarningBlocks)
 }

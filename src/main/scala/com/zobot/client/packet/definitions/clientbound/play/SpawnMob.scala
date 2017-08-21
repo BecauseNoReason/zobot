@@ -2,21 +2,21 @@ package com.zobot.client.packet.definitions.clientbound.play
 
 import com.zobot.client.packet.Packet
 
-case class SpawnMob(entityId: Int, entityUuid: UnknownType, propertyType: Int, x: UnknownType, y: UnknownType, z: UnknownType, yaw: UnknownType, pitch: UnknownType, headPitch: UnknownType, velocityX: UnknownType, velocityY: UnknownType, velocityZ: UnknownType, metadata: UnknownType) extends Packet {
+case class SpawnMob(entityId: Int, entityUuid: Any, propertyType: Int, x: Any, y: Any, z: Any, yaw: Any, pitch: Any, headPitch: Any, velocityX: Any, velocityY: Any, velocityZ: Any, metadata: Any) extends Packet {
   override lazy val packetId = 0x03
 
   override lazy val packetData: Array[Byte] =
     fromVarInt(entityId) ++
-    fromUnknownType(entityUuid) ++
+    fromAny(entityUuid) ++
     fromVarInt(propertyType) ++
-    fromUnknownType(x) ++
-    fromUnknownType(y) ++
-    fromUnknownType(z) ++
-    fromUnknownType(yaw) ++
-    fromUnknownType(pitch) ++
-    fromUnknownType(headPitch) ++
-    fromUnknownType(velocityX) ++
-    fromUnknownType(velocityY) ++
-    fromUnknownType(velocityZ) ++
-    fromUnknownType(metadata)
+    fromAny(x) ++
+    fromAny(y) ++
+    fromAny(z) ++
+    fromAny(yaw) ++
+    fromAny(pitch) ++
+    fromAny(headPitch) ++
+    fromAny(velocityX) ++
+    fromAny(velocityY) ++
+    fromAny(velocityZ) ++
+    fromAny(metadata)
 }

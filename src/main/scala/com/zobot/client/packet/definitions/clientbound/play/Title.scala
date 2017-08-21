@@ -2,17 +2,17 @@ package com.zobot.client.packet.definitions.clientbound.play
 
 import com.zobot.client.packet.Packet
 
-case class Title(action: UnknownType, setTitleText: UnknownType, setSubtitleText: UnknownType, setActionBarText: UnknownType, setTimesAndDisplayFadeIn: UnknownType, setTimesAndDisplayStay: UnknownType, setTimesAndDisplayFadeOut: UnknownType, hideNoFields: UnknownType, resetNoFields: UnknownType) extends Packet {
+case class Title(action: Any, setTitleText: Any, setSubtitleText: Any, setActionBarText: Any, setTimesAndDisplayFadeIn: Any, setTimesAndDisplayStay: Any, setTimesAndDisplayFadeOut: Any, hideNoFields: Any, resetNoFields: Any) extends Packet {
   override lazy val packetId = 0x47
 
   override lazy val packetData: Array[Byte] =
-    fromUnknownType(action) ++
-    fromUnknownType(setTitleText) ++
-    fromUnknownType(setSubtitleText) ++
-    fromUnknownType(setActionBarText) ++
-    fromUnknownType(setTimesAndDisplayFadeIn) ++
-    fromUnknownType(setTimesAndDisplayStay) ++
-    fromUnknownType(setTimesAndDisplayFadeOut) ++
-    fromUnknownType(hideNoFields) ++
-    fromUnknownType(resetNoFields)
+    fromAny(action) ++
+    fromAny(setTitleText) ++
+    fromAny(setSubtitleText) ++
+    fromAny(setActionBarText) ++
+    fromAny(setTimesAndDisplayFadeIn) ++
+    fromAny(setTimesAndDisplayStay) ++
+    fromAny(setTimesAndDisplayFadeOut) ++
+    fromAny(hideNoFields) ++
+    fromAny(resetNoFields)
 }

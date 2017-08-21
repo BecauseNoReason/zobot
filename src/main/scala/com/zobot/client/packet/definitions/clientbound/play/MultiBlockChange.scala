@@ -2,14 +2,14 @@ package com.zobot.client.packet.definitions.clientbound.play
 
 import com.zobot.client.packet.Packet
 
-case class MultiBlockChange(chunkX: UnknownType, chunkZ: UnknownType, recordCount: UnknownType, recordHorizontalPosition: UnknownType, recordYCoordinate: UnknownType, recordBlockId: UnknownType) extends Packet {
+case class MultiBlockChange(chunkX: Any, chunkZ: Any, recordCount: Any, recordHorizontalPosition: Any, recordYCoordinate: Any, recordBlockId: Any) extends Packet {
   override lazy val packetId = 0x10
 
   override lazy val packetData: Array[Byte] =
-    fromUnknownType(chunkX) ++
-    fromUnknownType(chunkZ) ++
-    fromUnknownType(recordCount) ++
-    fromUnknownType(recordHorizontalPosition) ++
-    fromUnknownType(recordYCoordinate) ++
-    fromUnknownType(recordBlockId)
+    fromAny(chunkX) ++
+    fromAny(chunkZ) ++
+    fromAny(recordCount) ++
+    fromAny(recordHorizontalPosition) ++
+    fromAny(recordYCoordinate) ++
+    fromAny(recordBlockId)
 }

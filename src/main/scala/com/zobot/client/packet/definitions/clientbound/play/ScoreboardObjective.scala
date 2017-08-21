@@ -2,12 +2,12 @@ package com.zobot.client.packet.definitions.clientbound.play
 
 import com.zobot.client.packet.Packet
 
-case class ScoreboardObjective(objectiveName: String, mode: UnknownType, objectiveValue: UnknownType, propertyType: UnknownType) extends Packet {
+case class ScoreboardObjective(objectiveName: String, mode: Any, objectiveValue: Any, propertyType: Any) extends Packet {
   override lazy val packetId = 0x41
 
   override lazy val packetData: Array[Byte] =
     fromVarString(objectiveName) ++
-    fromUnknownType(mode) ++
-    fromUnknownType(objectiveValue) ++
-    fromUnknownType(propertyType)
+    fromAny(mode) ++
+    fromAny(objectiveValue) ++
+    fromAny(propertyType)
 }

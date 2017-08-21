@@ -2,19 +2,19 @@ package com.zobot.client.packet.definitions.clientbound.play
 
 import com.zobot.client.packet.Packet
 
-case class Particle(particleId: UnknownType, longDistance: UnknownType, x: UnknownType, y: UnknownType, z: UnknownType, offsetX: UnknownType, offsetY: UnknownType, offsetZ: UnknownType, particleData: UnknownType, particleCount: UnknownType, data: UnknownType) extends Packet {
+case class Particle(particleId: Any, longDistance: Any, x: Any, y: Any, z: Any, offsetX: Any, offsetY: Any, offsetZ: Any, particleData: Any, particleCount: Any, data: Any) extends Packet {
   override lazy val packetId = 0x22
 
   override lazy val packetData: Array[Byte] =
-    fromUnknownType(particleId) ++
-    fromUnknownType(longDistance) ++
-    fromUnknownType(x) ++
-    fromUnknownType(y) ++
-    fromUnknownType(z) ++
-    fromUnknownType(offsetX) ++
-    fromUnknownType(offsetY) ++
-    fromUnknownType(offsetZ) ++
-    fromUnknownType(particleData) ++
-    fromUnknownType(particleCount) ++
-    fromUnknownType(data)
+    fromAny(particleId) ++
+    fromAny(longDistance) ++
+    fromAny(x) ++
+    fromAny(y) ++
+    fromAny(z) ++
+    fromAny(offsetX) ++
+    fromAny(offsetY) ++
+    fromAny(offsetZ) ++
+    fromAny(particleData) ++
+    fromAny(particleCount) ++
+    fromAny(data)
 }

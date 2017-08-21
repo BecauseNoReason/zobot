@@ -2,16 +2,16 @@ package com.zobot.client.packet.definitions.clientbound.play
 
 import com.zobot.client.packet.Packet
 
-case class ChunkData(chunkX: UnknownType, chunkZ: UnknownType, groundUpContinuous: UnknownType, primaryBitMask: Int, size: Int, data: UnknownType, numberOfBlockEntities: Int, blockEntities: UnknownType) extends Packet {
+case class ChunkData(chunkX: Any, chunkZ: Any, groundUpContinuous: Any, primaryBitMask: Int, size: Int, data: Any, numberOfBlockEntities: Int, blockEntities: Any) extends Packet {
   override lazy val packetId = 0x20
 
   override lazy val packetData: Array[Byte] =
-    fromUnknownType(chunkX) ++
-    fromUnknownType(chunkZ) ++
-    fromUnknownType(groundUpContinuous) ++
+    fromAny(chunkX) ++
+    fromAny(chunkZ) ++
+    fromAny(groundUpContinuous) ++
     fromVarInt(primaryBitMask) ++
     fromVarInt(size) ++
-    fromUnknownType(data) ++
+    fromAny(data) ++
     fromVarInt(numberOfBlockEntities) ++
-    fromUnknownType(blockEntities)
+    fromAny(blockEntities)
 }

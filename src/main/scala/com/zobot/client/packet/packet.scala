@@ -36,6 +36,8 @@ package object packet {
     def buildPacket: Array[Byte] =
       fromVarInt(packetData.length + 1) ++ fromVarInt(packetId) ++ packetData
 
+    def fromAny(x: Any): Array[Byte] = Array()
+
     /**
       *
       * @param x

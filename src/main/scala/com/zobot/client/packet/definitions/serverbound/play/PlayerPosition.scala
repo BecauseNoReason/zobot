@@ -2,12 +2,12 @@ package com.zobot.client.packet.definitions.serverbound.play
 
 import com.zobot.client.packet.Packet
 
-case class PlayerPosition(x: UnknownType, feetY: UnknownType, z: UnknownType, onGround: UnknownType) extends Packet {
+case class PlayerPosition(x: Any, feetY: Any, z: Any, onGround: Any) extends Packet {
   override lazy val packetId = 0x0E
 
   override lazy val packetData: Array[Byte] =
-    fromUnknownType(x) ++
-    fromUnknownType(feetY) ++
-    fromUnknownType(z) ++
-    fromUnknownType(onGround)
+    fromAny(x) ++
+    fromAny(feetY) ++
+    fromAny(z) ++
+    fromAny(onGround)
 }
